@@ -1,6 +1,12 @@
+
+
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 /*
@@ -71,7 +77,7 @@ public class Menu {
                     //verificar se posicao existe...
                     if(lista.quantProdutos() != 0)
                     {
-                        System.out.println("Digite a posição do item a ser removido: (ex: 1)");
+                        System.out.println("Digite a posição do item a ser removido: ");
                         pos = ler.nextInt();
                         pos = pos-1;
                         
@@ -109,7 +115,7 @@ public class Menu {
                         if(lista.quantProdutos() != 0)
                         {
 
-                        System.out.println("Indique a posição do produto: (ex: 1)");
+                        System.out.println("Indique a posição do produto: ");
                         pos = ler.nextInt();
 
 
@@ -136,15 +142,19 @@ public class Menu {
                             {
                                 System.out.println("\nLista vazia!\n");
                             }
+
                             String caminho = "C:/temp/textoExemplo.txt";
+                            String conteudo = "esse eh meu conteudo\n\n";
+
                             FileWriter escritor = new FileWriter(caminho);
-                            
+
                             {
+
                             escritor.append("\n****Exibindo todos produtos****\n");
 
             for(int i = 0; i<lista.quantProdutos(); i++)
         {
-            escritor.append("\n\n\nProduto -- "+ (i+1));
+            escritor.append("\n\n\nProduto -- " + i+1);
             escritor.append("\n\n\nNome do Produto: " + lista.getProduto(i).getNome());
             escritor.append("\nCódigo de Barras: "+ lista.getProduto(i).getCodBarras());
             escritor.append("\nSku: " + lista.getProduto(i).getSku());
@@ -155,8 +165,10 @@ public class Menu {
             escritor.append("\nPreço do Produto: R$" + lista.getProduto(i).getPreco());
             escritor.append("\nPeso do Produto: " + lista.getProduto(i).getPeso());
         }
-}             
-          escritor.close();
+                            }
+                    
+        escritor.close();
+     
           break;
                 default: System.out.println("DIGITE UM NÚMERO VÁLIDO!"); 
                     break;

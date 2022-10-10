@@ -9,6 +9,7 @@ import java.util.Scanner;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 /**
  *
  * @author Pedro Henrique
@@ -20,7 +21,6 @@ public class ListaProdutos {
       Scanner ler = new Scanner(System.in);
       private int item;
       private String str;
-      private int cont = 0;
 
 
    //método construtor...
@@ -46,6 +46,21 @@ public class ListaProdutos {
        return produtos.get(pos);
    }
 
+         public int converter_Id(){
+        
+     while(true){
+     System.out.printf("ID: \n");
+     String linha = ler.nextLine(); // ler a linha (termina no enter)
+     
+    try{
+        int inteiro = Integer.parseInt(linha); // (tenta converter pra int os dados inseridos)
+        return inteiro;
+    }
+    catch(NumberFormatException e){
+        System.out.printf("Você não digitou um número inteiro!\n");
+    }
+  }
+}
          
          public boolean verificarStrings(String str) 
         {
@@ -54,18 +69,19 @@ public class ListaProdutos {
          
        public String avaliarStrings(String str)
        {
+       
       if (verificarStrings(str))
     {
         return str;
     }
     else
     {
-        System.out.println("ERRO! - Inválido");
+        System.out.println("Neste campo não é permitido números.");
         System.out.println("Insira novamente: ");
         str = ler.nextLine();
         while(!verificarStrings(str))
         {
-        System.out.println("ERRO! - Inválido");
+        System.out.println("Neste campo não é permitido números.");
         System.out.println("Insira novamente: ");
         str = ler.nextLine();
         }        
@@ -159,9 +175,9 @@ public class ListaProdutos {
         {
                 Produto produtos = new Produto();
                 String str;
-
                 //fazendo o scan dos dados...
- 
+
+                
                 System.out.println("\nNome do Produto: ");
                 produtos.setNome(avaliarStrings(ler.nextLine()));
                 
@@ -183,17 +199,15 @@ public class ListaProdutos {
                 
                 //como somente o ID é num inteiro, 
                 //a validação é feita diretamente na função...
-                produtos.setId(cont+1);
+
+                produtos.setId(converter_Id());
                 //validando se as variáveis preço e peso são do tipo double...  
                 //obs cod 1 == preço e cod 2 == peso
                 produtos.setPreco(converter_double(1));
                 produtos.setPeso(converter_double(2));
                 //incluindo produto
                 listaProdutos.incluirProduto(produtos);
-                cont++; //incrementando no ID...
-                
-                System.out.println("\n\nProduto inserido com sucesso!\n\n\n");
-                
+  
         }
         
         //excluir um produto
@@ -210,7 +224,9 @@ public class ListaProdutos {
             String str;
             //fazendo o scan dos dados...
 
-           
+            System.out.println("Digite a posição do produto: ");
+            pos = ler.nextInt();
+            
             
             if(lista.quantProdutos() == 0)
             {
@@ -218,10 +234,6 @@ public class ListaProdutos {
             }
             else
             {
-                
-            System.out.printf("Digite a posição do produto (1 a %d): ", lista.quantProdutos());
-            pos = ler.nextInt();
-            
             
             if(pos <= lista.quantProdutos() && pos > 0)
             {
@@ -235,8 +247,9 @@ public class ListaProdutos {
                                "4- Descrição\n" +
                                "5- Categoria\n"+ 
                                "6- Fabricante\n" +
-                               "7- Preço\n"+ 
-                               "8- Peso"  
+                               "7- Id\n" +
+                               "8- Preço\n"+ 
+                               "9- Peso"  
             );
             System.out.println("Número do item a ser alterado: ");
             item = ler.nextInt();
@@ -286,15 +299,20 @@ public class ListaProdutos {
    
                         case 7:
                         System.out.printf("\n(novo) - ");
-                        lista.getProduto(pos).setPreco(converter_double(1));
+                        lista.getProduto(pos).setId(converter_Id());
                         break;
 
                         case 8:
                         System.out.printf("\n(novo) - ");
-                        lista.getProduto(pos).setPeso(converter_double(2));
+                        lista.getProduto(pos).setPreco(converter_double(1));
                         
                         break;
-                      
+
+                        case 9:
+                        System.out.printf("\n(novo) - ");
+                        lista.getProduto(pos).setPeso(converter_double(2));
+                        break;
+
                        default:
                         break;
                   }  
